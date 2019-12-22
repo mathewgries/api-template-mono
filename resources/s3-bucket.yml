@@ -1,0 +1,28 @@
+Resources:
+  # Replaces 'Attachments' with the name of your bucket
+  # Update the s3 bucket section in cognito-identity-pool.yml as well (Line 83)
+  AttachmentsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      # Set the CORS policy
+      CorsConfiguration:
+        CorsRules:
+          -
+            AllowedOrigins:
+              - '*'
+            AllowedHeaders:
+              - '*'
+            AllowedMethods:
+              - GET
+              - PUT
+              - POST
+              - DELETE
+              - HEAD
+            MaxAge: 3000
+
+# Print out the name of the bucket that is created
+Outputs:
+  # Replace 'Attachments' in both lines below with the update you made above
+  AttachmentsBucketName:
+    Value:
+      Ref: AttachmentsBucket

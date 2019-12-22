@@ -1,4 +1,7 @@
-service: smart-budget-api
+# Name your service
+# This should follow suit of your application name
+# replace the 'smart-budget' with your app name
+service: #smart-budget-api
 
 # Create an optimized package for our functions
 package:
@@ -14,8 +17,11 @@ custom:
   # commands. Or fallsback to what we have set in the provider section.
   stage: ${opt:stage, self:provider.stage}
   # Set the table name here so we can use it while testing locally
-  tableName: ${self:custom.stage}-accounts
+  # Replace 'accounts' with the name of your dynamo db table
+  tableName: # ${self:custom.stage}-accounts
 
+# Verify the runtime is the latest version.
+# Check periodically for updates if necessary
 provider:
   name: aws
   runtime: nodejs10.x
@@ -41,9 +47,11 @@ provider:
         - dynamodb:DeleteItem
       # Restrict our IAM role permissions to
       # the specific table for the stage
+      # List your tables below for user access
       Resource:
-        - "Fn::GetAtt": [ AccountsTable, Arn ]
+        #- "Fn::GetAtt": [ AccountsTable, Arn ]
 
+# List your endpoint functions.
 functions:
   # Defines an HTTP API endpoint that calls the main function in create.js
   # - path: url path is /accounts
@@ -60,11 +68,15 @@ functions:
           cors: true
           authorizer: aws_iam
 
+# Import any configurations set up in a separate yml file
+# for our application
 resources:
   # API Gateway Errors
   - ${file(resources/api-gateway-errors.yml)}
   # Database
   - ${file(resources/dynamodb-table.yml)}
+  # s3 Bucket
+  - ${file(resources/s3-bucket.yml)}
   # Cognito
   - ${file(resources/cognito-user-pool.yml)}
   - ${file(resources/cognito-identity-pool.yml)}

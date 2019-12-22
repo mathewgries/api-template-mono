@@ -1,8 +1,10 @@
 Resources:
+  # Replaces 'Accounts' with the the name of your table
   AccountsTable:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: ${self:custom.tableName}
+      # Replace accountId with the id for your table
       AttributeDefinitions:
         - AttributeName: userId
           AttributeType: S
